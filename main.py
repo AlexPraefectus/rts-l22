@@ -43,19 +43,17 @@ if __name__ == '__main__':
     sig = random_signal(HARMONICS, TICKS, FREQUENCY)
 
     transformed = fft(sig)
+    transformed_np = np.fft.fft(sig)
 
-    plt.subplot(311)
-    p1 = plt.plot(x_line, sig, label='Random signal')
+    diff = transformed - transformed_np
+
+    plt.subplot(211)
+    p1 = plt.plot(x_line, np.real(diff), label='Numpy and custom fft diff (Real)')
     plt.legend(handles=p1)
 
-    plt.subplot(312)
-    plt.title('FFT real')
-    p2 = plt.stem(x_line, np.real(transformed), use_line_collection=True)
-
-    plt.subplot(313)
-    plt.title('FFT imag')
-    p3 = plt.stem(x_line, np.imag(transformed), use_line_collection=True)
-
+    plt.subplot(212)
+    p2 = plt.plot(x_line, np.imag(diff), label='Numpy and custom fft diff (Imag)')
+    plt.legend(handles=p2)
     plt.show()
 
 
